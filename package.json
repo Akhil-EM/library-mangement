@@ -1,0 +1,29 @@
+{
+  "name": "library-management",
+  "version": "1.0.0",
+  "description": "backend of library management software",
+  "main": ".main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akhil-EM/library-mangement.git"
+  },
+  "author": "akhil em ,Akhil-EM (github)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akhil-EM/library-mangement/issues"
+  },
+  "homepage": "https://github.com/Akhil-EM/library-mangement#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.13",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7"
+  }
+}
