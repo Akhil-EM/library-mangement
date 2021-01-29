@@ -15,7 +15,9 @@ const app=new express();
 
 // importing routers
 const libraryRouter=require('./src/routers/Library')();
-
+const memberRouter=require('./src/routers/Members')();
+const adminRouter=require('./src/routers/Admin')();
+const booksRouter=require('./src/routers/books')();
 
 
 const db=mongoose.connection;
@@ -50,14 +52,17 @@ db.once('open',()=>{
 
 // entry point of application
 app.get('/',(req,res)=>{
-    
+    console.log(chalk.blueBright('books called!!'));
     res.json({status:'success'});
 });
 
+
+
 // handles the router
 app.use('/library',libraryRouter);
-
-
+app.use('/members',memberRouter);
+app.use('/admin',adminRouter);
+app.use('/books',booksRouter);
 
 app.listen(process.env.PORT || port,()=>{
      console.log(chalk.yellowBright(`Port ${port} is active !!\n`));

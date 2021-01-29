@@ -41,12 +41,15 @@ function routerHandler(){
       
       if(!(emailValidator(req.body.email))){
           res.json({status:'error',message:'invalid email'});
+          return;
       }
       if(!(passwordValidator(req.body.password))){
         res.json({status:'error',message:'invalid password'});
+        return;
       }
       if(!(pincodeValidator(req.body.pincode))){
         res.json({status:'error',message:'invalid pincode'});
+        return;
       }
       
       
@@ -86,6 +89,7 @@ function routerHandler(){
 
     libraryRouter.route('/login')
     .post((req,res)=>{
+        console.log(chalk.blue('library login router called !\n'));
         console.log(chalk.yellowBright('********************\n'));
         console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
         console.log(chalk.yellowBright('\n********************'));
@@ -107,10 +111,14 @@ function routerHandler(){
 
     libraryRouter.route('/info')
     .post((req,res)=>{
+        console.log(chalk.blue('library info router called !\n'));
         console.log(chalk.yellowBright('********************\n'));
         console.log(chalk.yellowBright(JSON.stringify({id:req.body.id})));
         console.log(chalk.yellowBright('\n********************'));
-
+        if(!idValidator(req.body.id)){
+            res.json({status:'error',message:'invalid libraryId'});
+            return;
+        }
         libraryRegisterModel.findOne({_id:req.body.id},(err,result)=>{
             if(err){
                 console.log(chalk.redBright(`${err} error occured`));
@@ -138,7 +146,7 @@ function emailValidator(email){
 
 }
 function passwordValidator(pass){
-    let regex=/.{6,}$/
+    let regex=/^\w{6,6}$/
     if (regex.test(pass))
     {
       return (true)
@@ -153,6 +161,13 @@ function pincodeValidator(pin){
     }
       return (false)
 }
-
+function idValidator(id){
+    let regex=/^\w{24,24}$/
+    if (regex.test(id))
+    {
+      return (true)
+    }
+      return (false)
+}
 
 module.exports=routerHandler;
