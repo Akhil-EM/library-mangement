@@ -29,7 +29,8 @@ const bookSchema=new mongoose.Schema({
         required:true
     },
     bookInhand:{
-        type:String
+        type:String,
+        
     },
     isAvilable:{
         type:Boolean,

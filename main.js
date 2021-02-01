@@ -7,7 +7,7 @@ const mongoose=require('mongoose');
 const path=require('path');
 const {Router}=require('express');
 
-
+let dateFormat = require('dateformat');
 
 //declare a port
 port=8080;
@@ -52,7 +52,7 @@ db.once('open',()=>{
 
 // entry point of application
 app.get('/',(req,res)=>{
-    console.log(chalk.blueBright('books called!!'));
+    console.log(chalk.blueBright('app base called!!'));
     res.json({status:'success'});
 });
 
@@ -63,6 +63,9 @@ app.use('/library',libraryRouter);
 app.use('/members',memberRouter);
 app.use('/admin',adminRouter);
 app.use('/books',booksRouter);
+
+
+
 
 app.listen(process.env.PORT || port,()=>{
      console.log(chalk.yellowBright(`Port ${port} is active !!\n`));

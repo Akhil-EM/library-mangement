@@ -1,6 +1,7 @@
 const express=require('express');
 const chalk=require('chalk');
 
+let dateFormat = require('dateformat');
 let {memberModel}=require('../models/MembersModel');
 let {libraryRegisterModel}=require('../models/libraryRegisterModel');
 let memberRouter=express.Router();
@@ -24,10 +25,10 @@ function routerHandler(){
             name:req.body.name,
             email:req.body.email,
             password:req.body.password,
-            membershipDate:req.body.membershipDate,
+            membershipDate:dateFormat(Date.now(),"dddd, mmmm dS, yyyy, h:MM:ss TT"),
             booksInHand:[],
             limit:3,
-            isActive:req.body.isActive
+            isActive:true
         }
      
         console.log(chalk.yellowBright('********************\n'));
@@ -117,46 +118,48 @@ function routerHandler(){
     });
     
 
-    memberRouter.route('/login')
-    .post((req,res)=>{
-        console.log(chalk.blue('member login router called !\n'));
-        console.log(chalk.yellowBright('********************\n'));
-        console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
-        console.log(chalk.yellowBright('\n********************'));
+    // memberRouter.route('/login')
+    // .post((req,res)=>{
+    //     console.log(chalk.blue('member login router called !\n'));
+    //     console.log(chalk.yellowBright('********************\n'));
+    //     console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
+    //     console.log(chalk.yellowBright('\n********************'));
 
-        memberModel.findOne({email:req.body.email,password:req.body.password},(err,result)=>{
-            if(err){
-                console.log(chalk.redBright(`${err} error occured`));
-                res.json({status:'error'});
-            }else if(!result){
-                res.json({status:'error'});
-            }else{
-                res.json({status:'success',info:result})
-            }
+    //     memberModel.findOne({email:req.body.email,password:req.body.password},(err,result)=>{
+    //         if(err){
+    //             console.log(chalk.redBright(`${err} error occured`));
+    //             res.json({status:'error'});
+    //         }else if(!result){
+    //             res.json({status:'error'});
+    //         }else{
+    //             res.json({status:'success',info:result})
+    //         }
 
-        }); 
-    });
+    //     }); 
+    // });
     
 
-    memberRouter.route('/info')
-    .post((req,res)=>{
-        console.log(chalk.blue('member info router called !\n'));
-        console.log(chalk.yellowBright('********************\n'));
-        console.log(chalk.yellowBright(JSON.stringify({id:req.body.id})));
-        console.log(chalk.yellowBright('\n********************'));
+    // memberRouter.route('/info')
+    // .post((req,res)=>{
+    //     console.log(chalk.blue('member info router called !\n'));
+    //     console.log(chalk.yellowBright('********************\n'));
+    //     console.log(chalk.yellowBright(JSON.stringify({id:req.body.id})));
+    //     console.log(chalk.yellowBright('\n********************'));
 
-        memberModel.findOne({_id:req.body.id},(err,result)=>{
-            if(err){
-                console.log(chalk.redBright(`${err} error occured`));
-                res.json({status:'error'});
-            }else if(!result){
-                res.json({status:'error'});
-            }else{
-                res.json({status:'success',info:result})
-            }
+    //     memberModel.findOne({_id:req.body.id},(err,result)=>{
+    //         if(err){
+    //             console.log(chalk.redBright(`${err} error occured`));
+    //             res.json({status:'error'});
+    //         }else if(!result){
+    //             res.json({status:'error'});
+    //         }else{
+    //             res.json({status:'success',info:result})
+    //         }
 
-        }); 
-    });
+    //     }); 
+    // });
+
+
     memberRouter.route('/fetch-all')
     .post((req,res)=>{
         console.log(chalk.blue('member info router called !\n'));

@@ -5,17 +5,23 @@ const BookIssueSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    memberId:{
+       type:String,
+       required:true
+    },
     libraryId:{
         type:String,
         required:true
     },
     dateOfRent:{
         type:String,
-        required:true
+        required:true,
+        
     },
     dateOfReturn:{
         type:String,
-        required:true
+        required:true,
+        
     },
     isDeleted:{
         type:String,
@@ -23,5 +29,5 @@ const BookIssueSchema=new mongoose.Schema({
     }
 });
 
-let bookIssueModel=mongoose.model('booksIssue',BookIssueSchema);
+let bookIssueModel=mongoose.model('bookIssue',BookIssueSchema);
 module.exports={bookIssueModel};

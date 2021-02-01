@@ -35,6 +35,25 @@ function routeHandler(){
         }); 
     });
     
+    adminRouter.route('/fetch-librarys')
+    .post((req,res)=>{
+        console.log(chalk.blue('admin login router called !\n'));
+        console.log(chalk.yellowBright('********************\n'));
+        console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
+        console.log(chalk.yellowBright('\n********************'));
+
+        libraryRegisterModel.find((err,result)=>{
+            if(err){
+                console.log(chalk.redBright(`${err} error occured`));
+                res.json({status:'error'});
+            }else if(!result){
+                res.json({status:'error'});
+            }else{
+                res.json({status:'success',info:result})
+            }
+
+        }); 
+    });
     adminRouter.route('/approve-library')
     .post((req,res)=>{
         console.log(chalk.blue('admin approvel router called !\n'));

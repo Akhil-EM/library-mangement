@@ -93,7 +93,7 @@ function routerHandler(){
         console.log(chalk.yellowBright('********************\n'));
         console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
         console.log(chalk.yellowBright('\n********************'));
-
+            
         libraryRegisterModel.findOne({email:req.body.email,password:req.body.password},(err,result)=>{
             if(err){
                 console.log(chalk.redBright(`${err} error occured`));
@@ -146,7 +146,7 @@ function emailValidator(email){
 
 }
 function passwordValidator(pass){
-    let regex=/^\w{6,6}$/
+    let regex=/^\w{6,}$/
     if (regex.test(pass))
     {
       return (true)
