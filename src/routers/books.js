@@ -75,6 +75,39 @@ function routerHandler(){
         
     });
 
+    booksRouter.route('/category-fetch').
+    post((req,res)=>{
+        console.log(chalk.blue('books delete router called !\n'));
+        console.log(chalk.yellowBright('********************\n'));
+        console.log(chalk.yellowBright(JSON.stringify({libraryId:req.body.libraryId,bookCategory:req.body.category})));
+        console.log(chalk.yellowBright('\n********************'));
+         
+        libraryRegisterModel.findOne({_id:req.body.libraryId},
+            (err,result)=>{
+                if(err){
+                    console.log(chalk.redBright(`${err} error occured`));
+                    res.json({status:'error'});
+                }else if(!result){
+                    res.json({status:'error',message:'library not found'});
+                }
+                else{
+
+                    booksModel.find({genre:req.body.category},(err,result)=>{
+                        if(err){
+                            console.log(chalk.redBright(`${err} error occured`));
+                            res.json({status:'error'});
+                        }else if(!result){
+                            res.json({status:'error'});
+                        }else{
+                            res.json({status:'success',info:result})
+                        }
+            
+                    }); 
+   
+                }
+        });
+        
+    });
 
     booksRouter.route('/delete').
     post((req,res)=>{
@@ -358,6 +391,11 @@ function routerHandler(){
         
         
     });
+    
+
+
+
+
 
     booksRouter.route('/return')
     .post((req,res)=>{

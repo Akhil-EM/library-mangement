@@ -10,7 +10,7 @@ const {Router}=require('express');
 let dateFormat = require('dateformat');
 
 //declare a port
-port=8080;
+port=1200;
 const app=new express();
 
 // importing routers
