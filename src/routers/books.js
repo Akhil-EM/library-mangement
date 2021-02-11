@@ -92,7 +92,7 @@ function routerHandler(){
                 }
                 else{
 
-                    booksModel.find({genre:req.body.category},(err,result)=>{
+                    booksModel.find({$and:[{genre:req.body.category},{libraryId:req.body.libaryId}]},(err,result)=>{
                         if(err){
                             console.log(chalk.redBright(`${err} error occured`));
                             res.json({status:'error'});
