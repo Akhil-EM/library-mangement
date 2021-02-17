@@ -33,6 +33,7 @@ function routerHandler(){
             noOfPages:req.body.noOfPages,
             price:req.body.price,
             booksInHand:"",
+            
             isAvilable:true,
             isDeleted:false
         }
@@ -77,7 +78,7 @@ function routerHandler(){
 
     booksRouter.route('/category-fetch').
     post((req,res)=>{
-        console.log(chalk.blue('books delete router called !\n'));
+        console.log(chalk.blue('books category-fetch router called !\n'));
         console.log(chalk.yellowBright('********************\n'));
         console.log(chalk.yellowBright(JSON.stringify({libraryId:req.body.libraryId,bookCategory:req.body.category})));
         console.log(chalk.yellowBright('\n********************'));
@@ -99,6 +100,7 @@ function routerHandler(){
                         }else if(!result){
                             res.json({status:'error'});
                         }else{
+                            console.log(result);
                             res.json({status:'success',info:result})
                         }
             
@@ -273,7 +275,7 @@ function routerHandler(){
         memberModel.findOne({_id:req.body.memberId},(err,result)=>{
             if(err){
                 console.log(chalk.redBright(`${err} error occured`));
-                res.json({status:'error'});
+                res.json({status:'error',message:''});
             }else if(!result){
                 res.json({status:'error',message:'book not found'});
             }
@@ -328,7 +330,7 @@ function routerHandler(){
                                     books__issue_model.save((err,result)=>{
                                         if(err){
                                             console.log(chalk.redBright(err),"error in saving");
-                                            res.json({status:'error'});
+                                            res.json({status:'error',message:""});
                                         }
                                         else{
                                                  
@@ -343,7 +345,7 @@ function routerHandler(){
                                                         console.log(result);
                                                             if(err){
                                                             console.log(chalk.blueBright('error to update book'),err);
-                                                            res.json({ status:"error"});
+                                                            res.json({ status:"error",message:''});
                                                             }else if(!result){
                                                             res.json({status:'error',message:'book not found'}) 
                                                         }else{
@@ -354,11 +356,11 @@ function routerHandler(){
                                                                     console.log(result);
                                                                         if(err){
                                                                         console.log(chalk.blueBright('error to update member'),err);
-                                                                        res.json({ status:"error"});
+                                                                        res.json({ status:"error",message:''});
                                                                         }else if(!result){
                                                                         res.json({status:'error',message:'member not found'}) 
                                                                     }else{
-                                                                        res.json({status:'success'});
+                                                                        res.json({status:'success',message:''});
                                                                     }
                                                                     });
                                                         }
