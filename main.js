@@ -41,6 +41,7 @@ mongoose.connect("mongodb+srv://akhilem:9539770998@cluster0-rmbxp.mongodb.net/li
    useCreateIndex:true,
    useUnifiedTopology:true  
 });
+
 db.on('error',(error)=>{
     console.log(chalk.redBright(error));
 });

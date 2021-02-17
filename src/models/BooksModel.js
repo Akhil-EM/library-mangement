@@ -28,10 +28,10 @@ const bookSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
-    bookInhand:{
-        type:String,
-        
-    },
+    bookIssueDetails:[
+          {bookInHandId:{type:String}},
+          {bookIssueId:{type:String}},
+          {rentersName:{type:String}}],
     isAvilable:{
         type:Boolean,
         required:true

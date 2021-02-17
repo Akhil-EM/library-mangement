@@ -32,8 +32,10 @@ function routerHandler(){
             genre:req.body.genre,
             noOfPages:req.body.noOfPages,
             price:req.body.price,
-            booksInHand:"",
-            
+            booksInHand:[
+                {bookInHandId:''},
+                {bookIssueId:''},
+                {rentersName:''}],
             isAvilable:true,
             isDeleted:false
         }
@@ -322,10 +324,16 @@ function routerHandler(){
                                         genre:result.genre,
                                         noOfPages:result.noOfPages,
                                         price:result.price,
-                                        bookInhand:req.body.memberId,
+                                        booksInHand:[
+                                            {bookInHandId:req.body.memberId},
+                                            {bookIssueId:''},
+                                            ],
                                         isAvilable:false,
                                         isDeleted:false
                                     }
+                                     
+                                   
+                                    
                                     let books__issue_model=new bookIssueModel(issue);
                                     books__issue_model.save((err,result)=>{
                                         if(err){
@@ -337,12 +345,15 @@ function routerHandler(){
                                             
                                               
                                             
-                                            console.log("haa books",book);
+                                             console.log("book issue",result._id);
                                            
                                                     // updating books and members
+                                                    book.booksInHand[1].bookIssueId=(result._id+" ").trim();
+                                                    
+                                                    console.log('3560',book);
                                                     booksModel.findByIdAndUpdate(req.body.bookId,{$set:book},
                                                         (err,result)=>{
-                                                        console.log(result);
+                                                        //    console.log(result);
                                                             if(err){
                                                             console.log(chalk.blueBright('error to update book'),err);
                                                             res.json({ status:"error",message:''});
@@ -353,7 +364,8 @@ function routerHandler(){
                                                             
                                                                 memberModel.findByIdAndUpdate(req.body.memberId,{$set:member},
                                                                     (err,result)=>{
-                                                                    console.log(result);
+                                                                        // console.log(result);
+                                                                        
                                                                         if(err){
                                                                         console.log(chalk.blueBright('error to update member'),err);
                                                                         res.json({ status:"error",message:''});
@@ -375,7 +387,7 @@ function routerHandler(){
                                         }
                                     });
                                 }else{
-                                    res.json({status:'error',message:'book inavilable'});
+                                    res.json({status:'error',message:'book unavilable'});
                                 }
                                 
                                   
