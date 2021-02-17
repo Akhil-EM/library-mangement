@@ -32,10 +32,10 @@ function routerHandler(){
             genre:req.body.genre,
             noOfPages:req.body.noOfPages,
             price:req.body.price,
-            booksInHand:[
-                {bookInHandId:'null'},
-                {bookIssueId:'null'},
-                {rentersName:'null'}],
+            bookIssueDetails:[
+                {bookInHandId:''},
+                {bookIssueId:''},
+                {rentersName:''}],
             isAvilable:true,
             isDeleted:false
         }
