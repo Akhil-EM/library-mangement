@@ -33,9 +33,9 @@ function routerHandler(){
             noOfPages:req.body.noOfPages,
             price:req.body.price,
             booksInHand:[
-                {bookInHandId:''},
-                {bookIssueId:''},
-                {rentersName:''}],
+                {bookInHandId:'null'},
+                {bookIssueId:'null'},
+                {rentersName:'null'}],
             isAvilable:true,
             isDeleted:false
         }
