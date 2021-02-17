@@ -28,10 +28,7 @@ const bookSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
-    bookIssueDetails:[
-          {bookInHandId:{type:String}},
-          {bookIssueId:{type:String}},
-          {rentersName:{type:String}}],
+    bookIssueDetails:[],
     isAvilable:{
         type:Boolean,
         required:true
