@@ -370,7 +370,7 @@ function routerHandler(){
                                              
                                                   
                                                   book.bookIssueDetails[0].bookInHandId=member_id;
-                                                  book.bookIssueDetails[1].bookIssueId=result._id;
+                                                  book.bookIssueDetails[1].bookIssueId=toString(result._id);
                                                   book.bookIssueDetails[2].rentersName=member_name;
                                                     console.log('3560',book);
                                                     booksModel.findByIdAndUpdate(req.body.bookId,{$set:book},
