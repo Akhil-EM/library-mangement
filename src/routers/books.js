@@ -448,7 +448,7 @@ function routerHandler(){
                 console.log(chalk.blueBright('error to delete book'),err);
                 res.json({ status:"error"});
                 }else if(!result){
-                res.json({status:'error',message:'book not found'}) 
+                res.json({status:'error',message:'book issue found'}) 
             }else{
                    booksModel.findByIdAndUpdate(req.body.bookId,{$set:{isAvilable:true,bookInhand:[
 
