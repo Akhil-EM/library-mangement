@@ -257,7 +257,21 @@ function routerHandler(){
         
         let testDate = new Date();
         testDate.setDate(testDate.getDate() + (4*7));
-        let book;
+       let book={
+            libraryId:"",
+            name:"",
+            author:"",
+            publisher:"",
+            genre:"",
+            noOfPages:"",
+            price:"",
+            bookIssueDetails:[
+                {bookInHandId:''},
+                {bookIssueId:''},
+                {rentersName:''}],
+            isAvilable:false,
+            isDeleted:false
+        }
         
         let issue={
             bookId:req.body.bookId,
@@ -267,6 +281,8 @@ function routerHandler(){
             dateOfReturn:dateFormat(testDate,"dddd, mmmm dS, yyyy, h:MM TT"),
             isDeleted:false
         }
+
+        let member_name,member_id;
        
            
         console.log(chalk.blue('books issue router called !\n'));
@@ -305,7 +321,12 @@ function routerHandler(){
                             limit:lmt,
                             isActive:true
                         }
-
+                        
+                        member_name=result.name;
+                        member_id=req.body.memberId;
+                        console.log({'mem name':member_name,'member id':member_id});
+                        
+                        // console.log("book tmp",book);
                         booksModel.findOne({_id:req.body.bookId},(err,result)=>{
                             if(err){
                                 console.log(chalk.redBright(`${err} error occured`));
@@ -316,6 +337,7 @@ function routerHandler(){
                             else{
                                 if(result.isAvilable){
 
+                                     
                                      book={
                                         libraryId:result.libraryId,
                                         name:result.name,
@@ -324,10 +346,10 @@ function routerHandler(){
                                         genre:result.genre,
                                         noOfPages:result.noOfPages,
                                         price:result.price,
-                                        booksInHand:[
-                                            {bookInHandId:req.body.memberId},
+                                        bookIssueDetails:[
+                                            {bookInHandId:''},
                                             {bookIssueId:''},
-                                            ],
+                                            {rentersName:''}],
                                         isAvilable:false,
                                         isDeleted:false
                                     }
@@ -345,11 +367,11 @@ function routerHandler(){
                                             
                                               
                                             
-                                             console.log("book issue",result._id);
-                                           
-                                                    // updating books and members
-                                                    book.booksInHand[1].bookIssueId=(result._id+" ").trim();
-                                                    
+                                             
+                                                  
+                                                  book.bookIssueDetails[0].bookInHandId=member_id;
+                                                  book.bookIssueDetails[1].bookIssueId=result._id;
+                                                  book.bookIssueDetails[2].rentersName=member_name;
                                                     console.log('3560',book);
                                                     booksModel.findByIdAndUpdate(req.body.bookId,{$set:book},
                                                         (err,result)=>{
@@ -360,7 +382,7 @@ function routerHandler(){
                                                             }else if(!result){
                                                             res.json({status:'error',message:'book not found'}) 
                                                         }else{
-                                                            
+                                                               
                                                             
                                                                 memberModel.findByIdAndUpdate(req.body.memberId,{$set:member},
                                                                     (err,result)=>{
@@ -428,7 +450,9 @@ function routerHandler(){
                 }else if(!result){
                 res.json({status:'error',message:'book not found'}) 
             }else{
-                   booksModel.findByIdAndUpdate(req.body.bookId,{$set:{isAvilable:true,bookInhand:""}},
+                   booksModel.findByIdAndUpdate(req.body.bookId,{$set:{isAvilable:true,bookInhand:[
+
+                   ]}},
                     (err,result)=>{
                     console.log(result);
                         if(err){
@@ -453,14 +477,14 @@ function routerHandler(){
                                                 // console.log(result);
                                                 let lmt=result.limit+1;
                                                 let book_in_hand=[];
-                                                book_in_hand=result.booksInHand;
+                                                //book_in_hand=result.booksInHand;
                                                 // console.log(book_in_hand);
                                                 
-                                                var idx =book_in_hand.indexOf(req.body.bookId);
-                                                if (idx !== -1) {
-                                                book_in_hand.splice(idx,1) 
-                                                }
-
+                                                // var idx =book_in_hand.indexOf(req.body.bookId);
+                                                // if (idx !== -1) {
+                                                // book_in_hand.splice(idx,1) 
+                                                // }
+                                                
 
 
                                                 
@@ -471,7 +495,9 @@ function routerHandler(){
                                                     name:result.name,
                                                     password:result.password,
                                                     membershipDate:result.membershipDate,
-                                                    booksInHand:book_in_hand,
+                                                    bookIssueDetails:[{bookInHandId:''},
+                                                                      {bookIssueId:''},
+                                                                      {rentersName:''}],
                                                     limit:lmt,
                                                     isActive:true
                                                 }
