@@ -94,14 +94,20 @@ function routerHandler(){
         console.log(chalk.yellowBright(JSON.stringify({email:req.body.email,password:req.body.password})));
         console.log(chalk.yellowBright('\n********************'));
             
-        libraryRegisterModel.findOne({email:req.body.email,password:req.body.password},(err,result)=>{
+        libraryRegisterModel.findOne({email:req.body.email,password:req.body.password,isActive:false},(err,result)=>{
             if(err){
                 console.log(chalk.redBright(`${err} error occured`));
                 res.json({status:'error'});
             }else if(!result){
                 res.json({status:'error'});
             }else{
-                res.json({status:'success',info:result})
+                
+                // console.log(result.isActive);
+                if(result.isActive){
+                    res.json({status:'success',info:result});
+                }else{
+                    res.json({status:'error',info:''});
+                }
             }
 
         }); 
