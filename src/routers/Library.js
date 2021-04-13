@@ -106,7 +106,7 @@ function routerHandler(){
                 if(result.isActive){
                     res.json({status:'success',info:result});
                 }else{
-                    res.json({status:'error',info:''});
+                    res.json({status:'pending',info:''});
                 }
             }
 
